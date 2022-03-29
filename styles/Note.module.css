@@ -1,0 +1,23 @@
+.note {
+  padding: 24px;
+  box-shadow: rgba(149, 157, 165, 0.2) 2px 4px 16px;
+  border-radius: 6px;
+  width: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.note:hover {
+  box-shadow: rgba(149, 157, 165, 0.6) 2px 4px 32px;
+  transform: translate(8px, -8px) rotate(-2deg);
+  /* transform: scale(1.05) rotate(3deg); */
+}
+
+.content {
+  max-height: 240px;
+  overflow-y: hidden;
+  user-select: none;
+  transition: all 0.3s ease-in-out;
+}
