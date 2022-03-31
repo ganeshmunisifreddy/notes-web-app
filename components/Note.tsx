@@ -1,16 +1,61 @@
 import React from "react";
 import styles from "../styles/Note.module.css";
+import {
+  Pencil,
+  Trash,
+  Palette,
+  Star,
+  StarSolid,
+  Thumbtack,
+  ThumbtackSolid,
+} from "react-uicons-beta";
 
-type Props = {
-  note: any;
+const textEllipsis = (text: string) => {
+  let sliceLength: number = 250;
+  if (text.length <= sliceLength) {
+    return text;
+  }
+  return text.slice(0, sliceLength) + "...";
 };
 
-const Note = (props: Props) => {
-  const { note } = props;
+const Note = (props: any) => {
+  const { note, handleDelete, index, handleEdit } = props;
+
+  const handleAction = (event: any) => {
+    event.stopPropagation();
+    console.log("action called");
+  };
+
   return (
-    <div key={"note-" + note.id} className={styles.note}>
-      <div className={styles.content}>{note.content}</div>
-      <div className={styles.actions}></div>
+    <div
+      key={"note-" + note.id}
+      className={styles.note}
+      onClick={() => handleEdit(index)}
+    >
+      <div className={styles.container}>
+        <textarea
+          className={styles.content}
+          value={textEllipsis(note.content)}
+          readOnly
+        ></textarea>
+      </div>
+      <div className={styles.actions}>
+        <div className={styles.iconButton} onClick={handleAction}>
+          <Star />
+        </div>
+        <div className={styles.iconButton} onClick={handleAction}>
+          <Thumbtack />
+        </div>
+        <div className={styles.iconButton} onClick={handleAction}>
+          <Palette />
+        </div>
+        <div
+          className={styles.iconButton}
+          onClick={(e: any) => handleDelete(e, index)}
+        >
+          <Trash />
+        </div>
+      </div>
     </div>
   );
 };

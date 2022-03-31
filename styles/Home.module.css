@@ -1,9 +1,12 @@
 .container {
-  padding: 1rem;
+  background: #f6f8fa;
+  min-height: 100vh;
+  padding-top: 24px;
 }
 
-.header {
-  text-align: center;
+.main {
+  margin-top: 64px;
+  padding: 12px;
 }
 
 .notes {
@@ -15,8 +18,22 @@
   width: 100%;
 }
 
-.editInput {
-  width: 320px;
-  padding: 12px;
+.notFound {
+  margin: 0 auto;
+  margin-top: 120px;
+  opacity: 0.7;
+  border: 1px solid #ccc;
+  height: 248px;
+  width: 248px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 6px;
+  font-weight: 600;
+}
+
+@media (max-width: 767px) {
+  .notes {
+    justify-content: left;
+  }
 }

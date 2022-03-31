@@ -1,37 +1,63 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useEffect, useState } from "react";
+import { v4 as uuid } from "uuid";
 import Note from "../components/Note";
 import styles from "../styles/Home.module.css";
-import { v4 as uuid } from "uuid";
+import Header from "../components/Header";
+import Modal from "../components/Modal";
+import EditNote from "../components/EditNote";
 
 const Home: NextPage = () => {
   const [notes, setNotes] = useState<any>([]);
-  const [text, setText] = useState("");
+  const [open, setOpen] = useState<boolean>(false);
+  const [noteIndex, setNoteIndex] = useState<any>();
 
-  const handleChange = (e: any) => {
-    let value = e.target.value;
-    setText(value);
+  const closeModal = () => {
+    setOpen(false);
+    setNoteIndex(null);
   };
 
-  const handleSave = () => {
+  const openModal = () => {
+    setOpen(true);
+  };
+
+  const handleSave = (note: any) => {
     let newNotes = [...notes];
-    if (text.length) {
+    if (noteIndex === 0 || noteIndex) {
+      newNotes[noteIndex] = note;
+    } else {
       let newNote = {
         id: uuid(),
-        content: text,
+        ...note,
       };
-      newNotes.push(newNote);
-      setNotes(newNotes);
-      localStorage.setItem("notes", JSON.stringify(newNotes));
-      setText("");
+      newNotes.unshift(newNote);
     }
+    setNotes(newNotes);
+    localStorage.setItem("notes", JSON.stringify(newNotes));
+    closeModal();
+  };
+
+  const handleEdit = (noteIndex: number) => {
+    setOpen(true);
+    let oldNotes = [...notes];
+    let note = oldNotes[noteIndex];
+    setNoteIndex(noteIndex);
+  };
+
+  const handleDelete = (event: any, noteIndex: number) => {
+    event.stopPropagation();
+    let oldNotes = [...notes];
+    oldNotes.splice(noteIndex, 1);
+    setNotes(oldNotes);
+    localStorage.setItem("notes", JSON.stringify(oldNotes));
   };
 
   useEffect(() => {
     let notes = localStorage.getItem("notes");
     if (notes) {
-      setNotes(JSON.parse(notes));
+      let parsedNotes = JSON.parse(notes);
+      setNotes(parsedNotes);
     }
   }, []);
 
@@ -42,27 +68,35 @@ const Home: NextPage = () => {
         <meta name="description" content="Notes app by Nine Technology" />
       </Head>
 
+      <Header handleModal={openModal} />
+
       <main className={styles.main}>
-        <div className={styles.header}>
-          <div>
-            <textarea
-              className={styles.editInput}
-              value={text}
-              onChange={handleChange}
-            ></textarea>
-          </div>
-          <button onClick={handleSave} disabled={!text.length}>
-            Save
-          </button>
-        </div>
         {notes.length > 0 && (
           <div className={styles.notes}>
             {notes.map((note: any, index: number) => (
-              <Note note={note} key={note.id} />
+              <Note
+                note={note}
+                key={note.id}
+                index={index}
+                handleEdit={handleEdit}
+                handleDelete={handleDelete}
+              />
             ))}
           </div>
         )}
+        {notes.length === 0 && (
+          <div className={styles.notFound}>Notes you add appear here</div>
+        )}
       </main>
+      {open && (
+        <Modal open={open} onClose={closeModal}>
+          <EditNote
+            note={notes[noteIndex]}
+            onClose={closeModal}
+            handleSave={handleSave}
+          />
+        </Modal>
+      )}
     </div>
   );
 };
