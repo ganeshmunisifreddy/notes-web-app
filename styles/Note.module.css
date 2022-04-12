@@ -1,12 +1,13 @@
 .noteWrapper {
   padding: 8px;
+  width: 25%;
 }
 
 .note {
   padding: 24px 24px 0 24px;
   box-shadow: rgba(149, 157, 165, 0.2) 2px 4px 16px;
   border-radius: 12px;
-  width: 240px;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -128,5 +129,29 @@
   }
   .container {
     height: 160px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .noteWrapper {
+    width: 20%;
+  }
+}
+
+@media (min-width: 1440px) {
+  .noteWrapper {
+    width: 16.666%;
+  }
+}
+
+@media (min-width: 1900px) {
+  .noteWrapper {
+    width: 14.285%;
+  }
+}
+
+@media (min-width: 2400px) {
+  .noteWrapper {
+    width: 12.5%;
   }
 }
