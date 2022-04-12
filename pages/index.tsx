@@ -5,8 +5,7 @@ import { v4 as uuid } from "uuid";
 import Note from "../components/Note";
 import styles from "../styles/Home.module.css";
 import Header from "../components/Header";
-import Modal from "../components/Modal";
-import EditNote from "../components/EditNote";
+import NoteModal from "../components/NoteModal";
 
 const Home: NextPage = () => {
   const [notes, setNotes] = useState<any>([]);
@@ -89,13 +88,12 @@ const Home: NextPage = () => {
         )}
       </main>
       {open && (
-        <Modal open={open} onClose={closeModal}>
-          <EditNote
-            note={notes[noteIndex]}
-            onClose={closeModal}
-            handleSave={handleSave}
-          />
-        </Modal>
+        <NoteModal
+          open={open}
+          note={notes[noteIndex]}
+          onClose={closeModal}
+          handleSave={handleSave}
+        />
       )}
     </div>
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./Modal.module.css";
 
 type Props = {
@@ -10,7 +10,9 @@ type Props = {
 const Modal = (props: Props) => {
   const { children, open, onClose } = props;
 
-  const handleClose = (event: any) => {
+  const modalRef = useRef<any>(null);
+
+  const preventClose = (event: any) => {
     event.stopPropagation();
     event.preventDefault();
   };
@@ -18,9 +20,10 @@ const Modal = (props: Props) => {
   if (!open) {
     return null;
   }
+
   return (
     <div className={styles.root} onClick={onClose}>
-      <div className={styles.container} onClick={handleClose}>
+      <div className={styles.container} onClick={preventClose} ref={modalRef}>
         {children}
       </div>
     </div>
