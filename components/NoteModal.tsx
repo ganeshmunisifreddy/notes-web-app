@@ -19,10 +19,11 @@ const EditNote = (props: any) => {
     }
   }, [eNote]);
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: any, type: string) => {
     let value = e.target.value;
     let newNote = { ...note };
-    newNote.content = value;
+    if (type === "title") newNote.title = value;
+    if (type === "content") newNote.content = value;
     setNote(newNote);
   };
 
@@ -39,16 +40,21 @@ const EditNote = (props: any) => {
   return (
     <Modal open={open} onClose={onClose}>
       <div className={styles.modalContainer}>
-        <h3 className={styles.modalTitle}>
-          {note.id ? "Edit Note" : "Add Note"}
-        </h3>
+        <div className={styles.modalTitle}>
+          <input
+            className={styles.titleInput}
+            placeholder="Title"
+            value={note.title}
+            onChange={(e: any) => handleChange(e, "title")}
+          />
+        </div>
         <div className={styles.modalContent}>
           <textarea
             ref={inputRef}
             placeholder="Please enter your note..."
             className={styles.editArea}
             value={note.content}
-            onChange={handleChange}
+            onChange={(e: any) => handleChange(e, "content")}
           ></textarea>
         </div>
         <div className={styles.modalActions}>

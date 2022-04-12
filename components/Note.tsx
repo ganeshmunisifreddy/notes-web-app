@@ -11,7 +11,7 @@ import {
 } from "react-uicons-beta";
 
 const textEllipsis = (text: string) => {
-  let sliceLength: number = 250;
+  let sliceLength: number = 200;
   if (text.length <= sliceLength) {
     return text;
   }
@@ -23,12 +23,12 @@ const Note = (props: any) => {
 
   const handleAction = (event: any) => {
     event.stopPropagation();
-    console.log("action called");
   };
 
   return (
     <div key={"note-" + note.id} className={styles.noteWrapper}>
       <div className={styles.note} onClick={() => handleEdit(index)}>
+        <div className={styles.title}>{note.title}</div>
         <div className={styles.container}>
           <textarea
             className={styles.content}
