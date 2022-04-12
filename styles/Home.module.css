@@ -1,39 +1,10 @@
-.container {
-  background: #f6f8fa;
-  min-height: 100vh;
-  padding-top: 24px;
-}
-
 .main {
-  margin-top: 64px;
+  margin: 64px 0;
   padding: 12px;
 }
 
 .notes {
   display: flex;
   flex-flow: row wrap;
-  gap: 24px;
-  padding: 12px;
-  justify-content: center;
   width: 100%;
-}
-
-.notFound {
-  margin: 0 auto;
-  margin-top: 120px;
-  opacity: 0.7;
-  border: 1px solid #ccc;
-  height: 248px;
-  width: 248px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 6px;
-  font-weight: 600;
-}
-
-@media (max-width: 767px) {
-  .notes {
-    justify-content: left;
-  }
 }

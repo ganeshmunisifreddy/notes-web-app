@@ -5,7 +5,9 @@ import styles from "../styles/Note.module.css";
 type Props = {};
 
 const defaultNote = {
+  title: "",
   content: "",
+  pinned: false,
 };
 
 const EditNote = (props: any) => {
@@ -18,15 +20,23 @@ const EditNote = (props: any) => {
     }
   }, [eNote]);
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: any, type: string) => {
     let value = e.target.value;
     let newNote = { ...note };
-    newNote.content = value;
+    if (type === "title") newNote.title = value;
+    if (type === "content") newNote.content = value;
     setNote(newNote);
   };
 
-  const handleApply = () => {
-    handleSave(note);
+  // const handleApply = () => {
+  //   handleSave(note);
+  // };
+
+  const handleClose = () => {
+    if (note.title.length || note.content.length) {
+      handleSave(note);
+    }
+    onClose();
   };
 
   const inputRef = useRef<any>(null);
@@ -36,19 +46,26 @@ const EditNote = (props: any) => {
   }, []);
 
   return (
-    <Modal open={open} onClose={onClose}>
-      <div className={styles.editContainer}>
-        <h3 className={styles.modalTitle}>
-          {note.id ? "Edit Note" : "Add Note"}
-        </h3>
-        <textarea
-          ref={inputRef}
-          placeholder="Please enter your note..."
-          className={styles.editInput}
-          value={note.content}
-          onChange={handleChange}
-        ></textarea>
-        <div className={styles.modalActions}>
+    <Modal open={open} onClose={handleClose}>
+      <div className={styles.modalContainer}>
+        <div className={styles.modalTitle}>
+          <input
+            className={styles.titleInput}
+            placeholder="Title"
+            value={note.title}
+            onChange={(e: any) => handleChange(e, "title")}
+          />
+        </div>
+        <div className={styles.modalContent}>
+          <textarea
+            ref={inputRef}
+            placeholder="Please enter your note..."
+            className={styles.editArea}
+            value={note.content}
+            onChange={(e: any) => handleChange(e, "content")}
+          ></textarea>
+        </div>
+        {/* <div className={styles.modalActions}>
           <button
             onClick={onClose}
             className="button__primary"
@@ -63,7 +80,7 @@ const EditNote = (props: any) => {
           >
             Save
           </button>
-        </div>
+        </div> */}
       </div>
     </Modal>
   );

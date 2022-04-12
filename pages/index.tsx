@@ -6,6 +6,7 @@ import Note from "../components/Note";
 import styles from "../styles/Home.module.css";
 import Header from "../components/Header";
 import NoteModal from "../components/NoteModal";
+import NotFound from "../components/NotFound";
 
 const Home: NextPage = () => {
   const [notes, setNotes] = useState<any>([]);
@@ -32,6 +33,9 @@ const Home: NextPage = () => {
       };
       newNotes.unshift(newNote);
     }
+    newNotes.sort((a: any, b: any) => {
+      return Number(b.pinned) - Number(a.pinned);
+    });
     setNotes(newNotes);
     localStorage.setItem("notes", JSON.stringify(newNotes));
     closeModal();
@@ -39,15 +43,28 @@ const Home: NextPage = () => {
 
   const handleEdit = (noteIndex: number) => {
     setOpen(true);
-    let oldNotes = [...notes];
-    let note = oldNotes[noteIndex];
     setNoteIndex(noteIndex);
   };
 
-  const handleDelete = (event: any, noteIndex: number) => {
-    event.stopPropagation();
+  const handleDelete = (noteIndex: number) => {
     let oldNotes = [...notes];
     oldNotes.splice(noteIndex, 1);
+    setNotes(oldNotes);
+    localStorage.setItem("notes", JSON.stringify(oldNotes));
+  };
+
+  const handlePin = (noteIndex: number) => {
+    let oldNotes = [...notes];
+    //oldNotes[noteIndex].pinned = !oldNotes[noteIndex].pinned;
+    let item = {
+      ...oldNotes[noteIndex],
+    };
+    item.pinned = !item.pinned;
+    oldNotes.splice(noteIndex, 1);
+    oldNotes.unshift(item);
+    oldNotes.sort((a: any, b: any) => {
+      return Number(b.pinned) - Number(a.pinned);
+    });
     setNotes(oldNotes);
     localStorage.setItem("notes", JSON.stringify(oldNotes));
   };
@@ -61,7 +78,7 @@ const Home: NextPage = () => {
   }, []);
 
   return (
-    <div className={styles.container}>
+    <div className={styles.rootContainer}>
       <Head>
         <title>Notes | Nine Technology</title>
         <meta name="description" content="Notes app by Nine Technology" />
@@ -78,14 +95,13 @@ const Home: NextPage = () => {
                 key={note.id}
                 index={index}
                 handleEdit={handleEdit}
+                handlePin={handlePin}
                 handleDelete={handleDelete}
               />
             ))}
           </div>
         )}
-        {notes.length === 0 && (
-          <div className={styles.notFound}>Notes you add appear here</div>
-        )}
+        {notes.length === 0 && <NotFound text="Notes you add appear here" />}
       </main>
       {open && (
         <NoteModal
