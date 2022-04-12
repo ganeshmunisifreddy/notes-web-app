@@ -25,6 +25,14 @@ const Note = (props: any) => {
     event.stopPropagation();
   };
 
+  const handleDeleteNote = (e: any, index: number) => {
+    e.stopPropagation();
+    let confirmDelete = confirm(
+      "This action cannot be undone. Are you sure you want to delete this note?"
+    );
+    if (confirmDelete) handleDelete(index);
+  };
+
   return (
     <div key={"note-" + note.id} className={styles.noteWrapper}>
       <div className={styles.note} onClick={() => handleEdit(index)}>
@@ -48,7 +56,7 @@ const Note = (props: any) => {
           </div>
           <div
             className={styles.iconButton}
-            onClick={(e: any) => handleDelete(e, index)}
+            onClick={(e: any) => handleDeleteNote(e, index)}
           >
             <Trash />
           </div>

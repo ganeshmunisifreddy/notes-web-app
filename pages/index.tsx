@@ -45,8 +45,8 @@ const Home: NextPage = () => {
     setNoteIndex(noteIndex);
   };
 
-  const handleDelete = (event: any, noteIndex: number) => {
-    event.stopPropagation();
+  const handleDelete = (noteIndex: number) => {
+    //event.stopPropagation();
     let oldNotes = [...notes];
     oldNotes.splice(noteIndex, 1);
     setNotes(oldNotes);
