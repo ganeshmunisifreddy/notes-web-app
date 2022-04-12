@@ -27,8 +27,15 @@ const EditNote = (props: any) => {
     setNote(newNote);
   };
 
-  const handleApply = () => {
-    handleSave(note);
+  // const handleApply = () => {
+  //   handleSave(note);
+  // };
+
+  const handleClose = () => {
+    if (note.title.length || note.content.length) {
+      handleSave(note);
+    }
+    onClose();
   };
 
   const inputRef = useRef<any>(null);
@@ -38,7 +45,7 @@ const EditNote = (props: any) => {
   }, []);
 
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal open={open} onClose={handleClose}>
       <div className={styles.modalContainer}>
         <div className={styles.modalTitle}>
           <input
@@ -57,7 +64,7 @@ const EditNote = (props: any) => {
             onChange={(e: any) => handleChange(e, "content")}
           ></textarea>
         </div>
-        <div className={styles.modalActions}>
+        {/* <div className={styles.modalActions}>
           <button
             onClick={onClose}
             className="button__primary"
@@ -72,7 +79,7 @@ const EditNote = (props: any) => {
           >
             Save
           </button>
-        </div>
+        </div> */}
       </div>
     </Modal>
   );
