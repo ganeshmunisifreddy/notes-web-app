@@ -5,6 +5,7 @@ import styles from "../styles/Note.module.css";
 type Props = {};
 
 const defaultNote = {
+  title: "",
   content: "",
 };
 
@@ -37,17 +38,19 @@ const EditNote = (props: any) => {
 
   return (
     <Modal open={open} onClose={onClose}>
-      <div className={styles.editContainer}>
+      <div className={styles.modalContainer}>
         <h3 className={styles.modalTitle}>
           {note.id ? "Edit Note" : "Add Note"}
         </h3>
-        <textarea
-          ref={inputRef}
-          placeholder="Please enter your note..."
-          className={styles.editInput}
-          value={note.content}
-          onChange={handleChange}
-        ></textarea>
+        <div className={styles.modalContent}>
+          <textarea
+            ref={inputRef}
+            placeholder="Please enter your note..."
+            className={styles.editArea}
+            value={note.content}
+            onChange={handleChange}
+          ></textarea>
+        </div>
         <div className={styles.modalActions}>
           <button
             onClick={onClose}

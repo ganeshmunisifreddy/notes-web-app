@@ -27,33 +27,31 @@ const Note = (props: any) => {
   };
 
   return (
-    <div
-      key={"note-" + note.id}
-      className={styles.note}
-      onClick={() => handleEdit(index)}
-    >
-      <div className={styles.container}>
-        <textarea
-          className={styles.content}
-          value={textEllipsis(note.content)}
-          readOnly
-        ></textarea>
-      </div>
-      <div className={styles.actions}>
-        <div className={styles.iconButton} onClick={handleAction}>
-          <Star />
+    <div key={"note-" + note.id} className={styles.noteWrapper}>
+      <div className={styles.note} onClick={() => handleEdit(index)}>
+        <div className={styles.container}>
+          <textarea
+            className={styles.content}
+            value={textEllipsis(note.content)}
+            readOnly
+          ></textarea>
         </div>
-        <div className={styles.iconButton} onClick={handleAction}>
-          <Thumbtack />
-        </div>
-        <div className={styles.iconButton} onClick={handleAction}>
-          <Palette />
-        </div>
-        <div
-          className={styles.iconButton}
-          onClick={(e: any) => handleDelete(e, index)}
-        >
-          <Trash />
+        <div className={styles.actions}>
+          <div className={styles.iconButton} onClick={handleAction}>
+            <Star />
+          </div>
+          <div className={styles.iconButton} onClick={handleAction}>
+            <Thumbtack />
+          </div>
+          <div className={styles.iconButton} onClick={handleAction}>
+            <Palette />
+          </div>
+          <div
+            className={styles.iconButton}
+            onClick={(e: any) => handleDelete(e, index)}
+          >
+            <Trash />
+          </div>
         </div>
       </div>
     </div>

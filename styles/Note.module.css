@@ -1,3 +1,7 @@
+.noteWrapper {
+  padding: 8px;
+}
+
 .note {
   padding: 24px 24px 0 24px;
   box-shadow: rgba(149, 157, 165, 0.2) 2px 4px 16px;
@@ -53,7 +57,7 @@
   opacity: 1;
 }
 
-.editContainer {
+.modalContainer {
   width: 600px;
 }
 
@@ -95,22 +99,34 @@
   background-color: #e3e3e3;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
+  .noteWrapper {
+    width: 33.333%;
+  }
   .note {
-    width: 45%;
     padding: 12px 12px 0 12px;
+    width: 100%;
   }
   .note:hover {
     transform: none;
   }
   .container {
-    height: 150px;
+    height: 220px;
   }
-  .editContainer {
+  .modalContainer {
     width: 100%;
   }
   .actions {
     opacity: 1;
     padding: 6px 0;
+  }
+}
+
+@media (max-width: 420px) {
+  .noteWrapper {
+    width: 50%;
+  }
+  .container {
+    height: 160px;
   }
 }
