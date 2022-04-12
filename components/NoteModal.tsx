@@ -7,6 +7,7 @@ type Props = {};
 const defaultNote = {
   title: "",
   content: "",
+  pinned: false,
 };
 
 const EditNote = (props: any) => {

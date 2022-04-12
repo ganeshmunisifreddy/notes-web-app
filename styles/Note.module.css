@@ -18,7 +18,8 @@
 
 .note:hover {
   box-shadow: rgba(149, 157, 165, 0.6) 2px 4px 32px;
-  transform: translate(8px, -8px) rotate(-2deg);
+  /* transform: translate(8px, -8px) rotate(-2deg); */
+  transform: translate(4px, -4px);
 }
 
 .title {
@@ -87,7 +88,7 @@
 }
 
 .modalContent {
-  height: 280px;
+  height: 320px;
 }
 
 .editArea {
@@ -120,7 +121,7 @@
     width: 33.333%;
   }
   .note {
-    padding: 12px 12px 0 12px;
+    padding: 16px 16px 0 16px;
     width: 100%;
   }
   .note:hover {

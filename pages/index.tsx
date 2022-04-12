@@ -33,6 +33,9 @@ const Home: NextPage = () => {
       };
       newNotes.unshift(newNote);
     }
+    newNotes.sort((a: any, b: any) => {
+      return Number(b.pinned) - Number(a.pinned);
+    });
     setNotes(newNotes);
     localStorage.setItem("notes", JSON.stringify(newNotes));
     closeModal();
@@ -40,15 +43,28 @@ const Home: NextPage = () => {
 
   const handleEdit = (noteIndex: number) => {
     setOpen(true);
-    let oldNotes = [...notes];
-    let note = oldNotes[noteIndex];
     setNoteIndex(noteIndex);
   };
 
   const handleDelete = (noteIndex: number) => {
-    //event.stopPropagation();
     let oldNotes = [...notes];
     oldNotes.splice(noteIndex, 1);
+    setNotes(oldNotes);
+    localStorage.setItem("notes", JSON.stringify(oldNotes));
+  };
+
+  const handlePin = (noteIndex: number) => {
+    let oldNotes = [...notes];
+    //oldNotes[noteIndex].pinned = !oldNotes[noteIndex].pinned;
+    let item = {
+      ...oldNotes[noteIndex],
+    };
+    item.pinned = !item.pinned;
+    oldNotes.splice(noteIndex, 1);
+    oldNotes.unshift(item);
+    oldNotes.sort((a: any, b: any) => {
+      return Number(b.pinned) - Number(a.pinned);
+    });
     setNotes(oldNotes);
     localStorage.setItem("notes", JSON.stringify(oldNotes));
   };
@@ -79,6 +95,7 @@ const Home: NextPage = () => {
                 key={note.id}
                 index={index}
                 handleEdit={handleEdit}
+                handlePin={handlePin}
                 handleDelete={handleDelete}
               />
             ))}
