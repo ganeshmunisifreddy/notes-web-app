@@ -7,6 +7,8 @@ import styles from "../styles/Home.module.css";
 import Header from "../components/Header";
 import NoteModal from "../components/NoteModal";
 import NotFound from "../components/NotFound";
+import { AnimatePresence, motion } from 'framer-motion';
+import noteStyles from "../styles/Note.module.css";
 
 const Home: NextPage = () => {
   const [notes, setNotes] = useState<any>([]);
@@ -89,16 +91,29 @@ const Home: NextPage = () => {
       <main className={styles.main}>
         {notes.length > 0 && (
           <div className={styles.notes}>
-            {notes.map((note: any, index: number) => (
-              <Note
-                note={note}
-                key={note.id}
-                index={index}
-                handleEdit={handleEdit}
-                handlePin={handlePin}
-                handleDelete={handleDelete}
-              />
-            ))}
+            <AnimatePresence initial={false}>
+              {notes.map((note: any, index: number) => (
+                <motion.div
+                  key={note.id}
+                  className={noteStyles.noteWrapper}
+                  initial={{ opacity: 0, y: 30, scale: 0.3 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.3 } }}
+                  transition={{
+                    type: "tween"
+                  }}
+                  layout
+                >
+                  <Note
+                    note={note}
+                    index={index}
+                    handleEdit={handleEdit}
+                    handlePin={handlePin}
+                    handleDelete={handleDelete}
+                  />
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </div>
         )}
         {notes.length === 0 && <NotFound text="Notes you add appear here" />}

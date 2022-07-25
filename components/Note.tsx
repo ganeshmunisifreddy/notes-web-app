@@ -31,7 +31,7 @@ const Note = (props: any) => {
   };
 
   return (
-    <div key={"note-" + note.id} className={styles.noteWrapper}>
+    <>
       <div className={styles.note} onClick={() => handleEdit(index)}>
         <div className={styles.title}>{note.title}</div>
         <div className={styles.container}>
@@ -59,7 +59,7 @@ const Note = (props: any) => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
